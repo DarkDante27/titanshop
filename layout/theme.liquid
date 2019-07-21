@@ -9,10 +9,12 @@
   {{ content_for_header }} <!-- Header hook for plugins -->
   {{ 'application.scss.css' | asset_url | stylesheet_tag }}
   {{ 'application.js' | asset_url | script_tag }}
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/fccddab9af.js"></script>
 </head>
-<body>
+<body id='body'>
 
   <div class='d-flex justify-content-between'>
     <div class="d-flex justify-content-start logo">
@@ -34,16 +36,22 @@
 
         {% endfor %}]
       {% else %}
-      <div class='navbar-item'>
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        </div>
+        {% if link.title == 'Home' %}
+          <div class='navbar-item'>
+              <a href="{{ link.url }}"><img src="https://res.cloudinary.com/dduochwyb/image/upload/v1563688898/shop_vxep25.svg" alt="Home"></a>
+          </div>
+      {% else %}
+        <div class='navbar-item'>
+              <a href="{{ link.url }}"><img src="https://res.cloudinary.com/dduochwyb/image/upload/v1563688898/shopping_ibikf9.svg" alt="Featured"></a>
+          </div>
+      {% endif %}
       {% endif %}
     {% endfor %}
-
-    <a href="/cart">Cart</a>
+     <div class='navbar-item'>
+       <a href="/cart" class="cart-counter"><img src="https://res.cloudinary.com/dduochwyb/image/upload/v1563690134/shopping-basket_n1fwxn.svg" alt="Cart">( {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }})</a>
+     </div>
    </div>
   </div>
-
 
   {% if shop.customer_accounts_enabled %}
     {% if customer %}
@@ -59,5 +67,18 @@
   <main role="main">
     {{ content_for_layout }}
   </main>
+
+  <div class="footer">
+    <div class="footer-links">
+      <a href="https://github.com/DarkDante27" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.instagram.com/darkdante28" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com/josepauloovall3" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.linkedin.com/in/pauloovallerivera" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <div class="footer-copyright">
+      Titan Goods® All Rights Reserved 2019.
+    </div>
+  </div>
+
 </body>
 </html>
