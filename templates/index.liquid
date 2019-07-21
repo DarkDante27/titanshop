@@ -1,13 +1,26 @@
-<div class="container">
-  <div class="cards">
-    {% for product in collections.frontpage.products limit:4 %}
-      <div class="card-category">
-        <a href="{{ product.url | within: collection }}">
-          <img class='card-image' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
-        </a>
-        <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
-        {{ product.price | money }}
-        {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://i.imgur.com/OYLpduR.jpg);">
+  <div class="container">
+    <h1>Welcome to Titan Goods</h1>
+    <p>We Love the mysterious Saturn's moon Titan!</p>
+    <a class="btn btn-info" href="/collections/all">Featured Items</a>
+  </div>
+</div>
+
+<div class="container shop-title">Shop</div>
+   <div class="container">
+     <div class="cards">
+      {% for product in collections.frontpage.products limit:4 %}
+        <div class="card-category">
+          <a href="{{ product.url | within: collection }}">
+            <img class='card-image' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+          </a>
+
+          <div class="product-desc-price">
+            <a class="float-left card-title" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+            <h6 class="float-right card-price">{{ product.price | money }}
+              {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
+            </h6>
+        </div>
       </div>
     {% endfor %}
   </div>
