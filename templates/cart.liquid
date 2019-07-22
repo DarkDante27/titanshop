@@ -1,46 +1,59 @@
-{% if cart.item_count > 0 %}
-  <h1>cart</h1>
-  <form action="/cart" method="post" novalidate>
-    <table>
-      <thead>
-        <th colspan="2">Prod</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>total</th>
-      </thead>
-      <tbody>
-        {% for item in cart.items %}
-          <tr>
-            <td>
-              <a href="{{ item.url | within: collections.all }}">
-                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
-              </a>
-            </td>
-            <td>
-              <a href="{{ item.url }}">{{ item.product.title }}</a>
-              {{ item.variant.title }}
-              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
-            </td>
-            <td>{{ item.price | money }}</td>
-            <td>
-              <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
-            </td>
-            <td>
-              {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
-              {{ item.line_price | money }}
-              {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div>
-      <p>sub total : {{ cart.total_price | money }}</p>
-      <button type="submit" name="update">Update</button>
-      <button type="submit" name="checkout">Checkout</button>
-    </div>
-  </form>
-{% else %}
-  <h2>cart</h2>
-  Cart is empty
-{% endif %}
+<div class="container">
+  {% if cart.item_count > 0 %}
+    <h1 class="cart-title">Your Cart</h1>
+
+    <form action="/cart" method="post" novalidate>
+      <table>
+        <tbody class="row">
+          {% for item in cart.items %}
+            <tr class="cart-info row">
+              <td class="col">
+                <p class="cart-headers">Product</p>
+                <a href="{{ item.url | within: collections.all }}">
+                  <img class="cart-prod-image" src="{{ item | img_url: 'large' }}" alt="{{ item.title | escape }}">
+                </a>
+              </td>
+
+                <td class="d-flex align-items-start flex-column bd-highlight mb-3 col cart-prod-info">
+                  <p class="cart-headers-info">Information</p>
+                  <a class="mb-auto p-2 bd-highlight col product-title-blue" href="{{ item.url }}">{{ item.product.title }}</a>
+                  <p class="p-2 bd-highlight col ">{% if item.variant.title == 'Default Title' %} Unique Style {% else %} {{ item.variant.title }} {% endif %} </p>
+                  <a class="p-2 bd-highlight btn btn-danger remove-button" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">Remove</a>
+                </td>
+
+              <td class="cart-price col align-items-end">
+                <p class="cart-headers">Price</p>
+                <p class="price-centered">{{ item.price | money }}</p>
+              </td>
+
+              <td class="cart-quantity col">
+                <p class="cart-headers">Quantity</p>
+                <input class="price-centered form-control" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
+              </td>
+
+              <td class="col">
+                <p class="cart-headers">Total</p>
+                {% if item.original_line_price != item.line_price %}<p class="price-centered">{{ item.original_line_price | money }}</p>{% endif %}
+                <p class="price-centered">{{ item.line_price | money }}</p>
+                {% for discount in item.discounts %}<p class="price-centered">{{ discount.title }}</p>{% endfor %}
+              </td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+      <div class="checkout-cont d-flex justify-content-end d-flex align-items-end flex-column bd-highlight mb-3">
+        <h3 class="total-underlined">TOTAL {{ cart.total_price | money }}</h3>
+        <div class="buttons-div">
+        <button class="btn btn-dark update-button" type="submit" name="update">Update cart total</button>
+        <button class="btn btn-info checkout-button" type="submit" name="checkout">Checkout</button>
+        </div>
+      </div>
+    </form>
+
+  {% else %}
+    <h2>cart</h2>
+    Cart is empty
+  {% endif %}
+</div>
