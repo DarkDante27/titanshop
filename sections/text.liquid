@@ -1,0 +1,31 @@
+{% if section.settings.text-box == ""%}
+  <div></div>
+{% else %}
+  <div id="textsection"><h1> {{ section.settings.text-box }} </h1></div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Coding Test",
+    "settings": [
+    {
+        "id": "text-box",
+        "type": "text",
+        "label": "Random Title",
+    "default": "Random Title"
+      }
+   ],
+    "presets": [
+    {
+      "name": "Random Title",
+      "category": "Random"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
