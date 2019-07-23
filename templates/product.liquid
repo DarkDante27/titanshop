@@ -1,4 +1,4 @@
-<div class="container prod-grid">
+<div id="product-page"class="container prod-grid">
 
   <div id="carouselExampleControls" class="carousel slide carousel-style" data-ride="carousel">
     <div class="carousel-inner">
@@ -25,18 +25,40 @@
         <div class="prod-page-title p-2 bd-highlight">
           <h1>{{ product.title }}</h1>
         </div>
+<!--     This is getting the data for use in JavaScript modal it will be hidden -->
+
+    {% assign product_quantity = product.variants[0].inventory_quantity %}
+    <div class='prod-quantity' style="display: none;">{{ product.variants[0].inventory_quantity }}</div>
+
+    {% if cart.item_count > 0 %}
+      <div class='cart-quantity' style="display: none;" data-quantity="{{ cart.item_count }}">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</div>
+      <div class='cart-data' style="display: none;">
+      {% for item in cart.items %}
+       <p class='cart-items'>{{ item.title }} | Quantity: {{ item.quantity }}</p>
+      {% endfor %}
+        <p class='cart-total-price'>Total: {{ cart.total_price | money }}</p>
+      </div>
+    {% else %}
+      <div class='cart-data' style="display: none;" data-quantity="{{ cart.item_count }}">
+      <p class='cart-quantity'>There are no items in the cart </p>
+      </div>
+    {% endif %}
+
+<!--   End of data section -->
 
     <div class="prod-page-description p-2 bd-highlight"><p>{{ product.description }}</p></div>
-
       <div class="d-flex align-items-end mt-auto p-2 bd-highlight add-cart-form">
 
-        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class='variant-select'>
           <div class="form-group">
             <select name="id" id="productSelect" class="form-control">
               {% for variant in product.variants %}
                 {% if variant.available %}
                   <option value="{{ variant.id }}">
-                  {{ variant.title }} - {{ variant.price | money_with_currency }}
+                  {% if variant.title == 'Default Title' %}
+                      {{ product.title }} - {{ variant.price | money_with_currency }}
+                      {% else %} {{ variant.title }} - {{ variant.price | money_with_currency }}
+                    {% endif %}
                   </option>
                 {% else %}
                   <option disabled="disabled">
