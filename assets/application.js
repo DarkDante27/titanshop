@@ -28,7 +28,7 @@ const productModal = () => {
           showCancelButton: false,
           focusConfirm: true,
           confirmButtonText:
-            '<i class="fa fa-thumbs-up"></i> Great!'
+            '<i class="fa fa-thumbs-up"></i> Ok!'
           })
         } else {
           Swal.fire({
@@ -41,7 +41,7 @@ const productModal = () => {
           showCancelButton: false,
           focusConfirm: true,
           confirmButtonText:
-            '<i class="fa fa-thumbs-up"></i> Great!'
+            '<i class="fa fa-thumbs-up"></i> Ok!'
         })
         }
 
@@ -118,7 +118,7 @@ const AddToCartAjax = () => {
          .done(function( data, textStatus, jqXHR ) {
           Swal.fire(
        'Thank You!',
-         'The Item has been adedd to the cart!',
+         'The Item has been added to the cart!',
          'success'
           )
           const sweetAlertOk = document.querySelector('.swal2-confirm')
@@ -132,7 +132,7 @@ const AddToCartAjax = () => {
           Swal.fire({
             type: 'error',
             title: 'Oops...',
-            text: 'Sorry, the item is sold out'
+            text: 'Sorry, Sold out'
            })
          })
       });
@@ -140,9 +140,17 @@ const AddToCartAjax = () => {
   }
 }
 
+
 const reloadAfterAdd = () => {
  location.reload(false);
 }
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  const randomTitle = document.querySelector('#textsection')
+  if (randomTitle) {
+  console.log(randomTitle.innerText)
+  }
+})
 
 // Calling javaScript functions
 
