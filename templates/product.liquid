@@ -25,6 +25,7 @@
         <div class="prod-page-title p-2 bd-highlight">
           <h1>{{ product.title }}</h1>
         </div>
+
 <!--     This is getting the data for use in JavaScript modal it will be hidden -->
 
     {% assign product_quantity = product.variants[0].inventory_quantity %}
@@ -68,12 +69,18 @@
             {% endfor %}
             </select>
             {{ current_variant.price | money }}
-            <label for="Quantity" class="quantity-label">Quantity</label>
-            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="form-control">
-            <button type="submit" name="add" id="AddToCart" class="btn btn-primary add-to-cart-button">Add to cart</button>
-          </div>
-        </form>
+          <label for="Quantity" class="quantity-label">Quantity</label>
+          <input type="number" id="Quantity" name="quantity" value="1" min="1" class="form-control">
 
-      </div>
+          {% if product.variants[0].inventory_quantity == 0%}
+            <button type="submit" name="add" id="AddToCart" class="add-to-cart-button-disabled" disabled>Add to cart</button>
+          {% elsif product.variants[0].inventory_quantity < 5%}
+            <button type="submit" name="add" id="AddToCart" class="add-to-cart-button">Low Stock - Add to cart</button>
+          {% else %}
+            <button type="submit" name="add" id="AddToCart" class="add-to-cart-button">Add to cart</button>
+          {% endif %}
+        </div>
+      </form>
+    </div>
   </div>
 </div>

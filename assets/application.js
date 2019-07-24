@@ -1,17 +1,14 @@
 // functions
 
 const productModal = () => {
-  console.log('Im being fired')
   document.addEventListener("DOMContentLoaded", function(event) {
 
   const prodPageId = document.getElementById('product-page')
   if (prodPageId && document.referrer == ('https://titangoods.myshopify.com/' || 'https://titangoods.myshopify.com/cart') ) {
 
       const selected = document.querySelector('.variant-select');
-      console.log(selected)
 
       selectTags = selected.getElementsByTagName("select");
-      console.log(selectTags)
       for(let i = 0; i < selectTags.length; i++) {
      }
 
@@ -142,8 +139,6 @@ const AddToCartAjax = () => {
     };
   }
 }
-
-
 
 const reloadAfterAdd = () => {
  location.reload(false);
