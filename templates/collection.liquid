@@ -1,18 +1,38 @@
 {% paginate collection.products by 2 %}
-  <h1>{{ collection.title }}</h1>
+  <h1 class="cart-title">{{ collection.title }}</h1>
+<div class='container'>
   {% for product in collection.products %}
-    <div>
-      <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
-      {{ product.price | money }}
-      {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
-      <a href="{{ product.url | within: collection }}">
-        <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
-      </a>
+
+    <div class='row'>
+      <div class="col">
+        <div class='d-flex justify-content-between col-container'>
+          <a href="{{ product.url | within: collection }}">
+            <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+          </a>
+          <div class='product-info'>
+            <div class='product-title-col'>
+              <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+            </div>
+            <div class='product-price-col'>
+              {% if product.available %}
+              {{ product.price | money }}
+              {% else %}
+              <strong>Sold out</strong>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+     </div>
     </div>
   {% else %}
-    <p>no matches</p>
+    <h2 class="cart-title">No Results</h2>
   {% endfor %}
+</div>
+
+
+
   {% if paginate.pages > 1 %}
-    {{ paginate | default_pagination }}
+   <div class="d-flex justify-content-center"> {{ paginate | default_pagination }} </div>
   {% endif %}
 {% endpaginate %}

@@ -53,7 +53,9 @@
     </form>
 
   {% else %}
-    <h2>cart</h2>
-    Cart is empty
+    <h2 class="cart-title">Opps! Your cart is empty</h2>
+    <div id='empty-cart' class='d-flex justify-content-center'>
+      <img src="https://res.cloudinary.com/dduochwyb/image/upload/v1563940112/2000px-Empty_shopping_cart_clip_art.svg_udyzat.png" alt="empty cart" >
+    </div>
   {% endif %}
 </div>
